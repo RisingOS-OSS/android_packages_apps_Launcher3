@@ -470,4 +470,8 @@
     <string name="about_credits_title">Built upon contributions from</string>
     <string name="about_version_title">Ortus version</string>
     <string name="about_version_developer">risingOS Team</string>
+    
+    <!-- Widgets -->
+    <string name="widget_battery_title">Battery widget</string>
+    <string name="widget_photo_title">Photo widget</string>
 </resources>

@@ -1,0 +1,48 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/batteryRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:backgroundTint="@color/themed_icon_background_color"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/phone_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/device_phone_default"
+        android:clipToOutline="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/deviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="28sp"
+        android:fontFamily="nothingdot57"
+        android:textStyle="bold"
+        android:textColor="@color/themed_icon_color"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/batteryLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="nothingdot57"
+        android:text="100%"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="@color/themed_icon_color"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
+
