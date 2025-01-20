@@ -24,6 +24,7 @@ import android.graphics.*
 import android.os.UserHandle
 import android.provider.Settings
 import android.widget.RemoteViews
+import android.view.View
 
 import com.android.launcher3.R
 
@@ -60,7 +61,7 @@ class PhotoWidgetProvider : BaseWidgetProvider() {
         val localRemoteViews = remoteViews
         val photoFilePath = Settings.System.getString(context.contentResolver, "home_photo_widget_uri")
         val isGrayscale = Settings.System.getIntForUser(context.contentResolver, "home_photo_widget_grayscale", 0, UserHandle.USER_CURRENT) == 1
-        if (photoFilePath == previousPhotoFilePath) return
+        if (photoFilePath == previousPhotoFilePath && !photoFilePath.isNullOrEmpty()) return
         previousPhotoFilePath = photoFilePath
         appWidgetIds!!.forEach { widgetId ->
             localRemoteViews?.apply {
@@ -76,11 +77,16 @@ class PhotoWidgetProvider : BaseWidgetProvider() {
                         setImageViewBitmap(R.id.widget_image, compressedBitmap)
                         if (processedBitmap != loadedBitmap) loadedBitmap.recycle()
                         processedBitmap.recycle()
+                        setViewVisibility(R.id.widget_image, View.VISIBLE)
+                        setViewVisibility(R.id.widget_add_photo_text, View.GONE)
                     }
+                } else {
+                    setViewVisibility(R.id.widget_image, View.GONE)
+                    setViewVisibility(R.id.widget_add_photo_text, View.VISIBLE)
                 }
                 val intent = Intent(context, PhotoPickerActivity::class.java)
                 val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-                setOnClickPendingIntent(R.id.widget_image, pendingIntent)
+                setOnClickPendingIntent(R.id.widget_root, pendingIntent)
             }
             localRemoteViews?.let {
                 AppWidgetManager.getInstance(context).updateAppWidget(widgetId, it)

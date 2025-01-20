@@ -316,5 +316,41 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".widgets.WifiWidgetProvider"
+            android:label="@string/widget_wifi_title" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/wifi_widget_info" />
+        </receiver>
+        
+        <receiver
+            android:name=".widgets.DataToggleWidgetProvider"
+            android:label="@string/widget_data_title" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/data_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.BluetoothToggleWidgetProvider"
+            android:label="@string/widget_bt_title" 
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/bluetooth_widget_info" />
+        </receiver>
+
     </application>
 </manifest>

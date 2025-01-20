@@ -474,4 +474,8 @@
     <!-- Widgets -->
     <string name="widget_battery_title">Battery widget</string>
     <string name="widget_photo_title">Photo widget</string>
+    <string name="widget_wifi_title">Wifi widget</string>
+    <string name="widget_data_title">Data widget</string>
+    <string name="widget_bt_title">Bluetooth widget</string>
+    <string name="photo_widget_onboarding">Click to add new photo</string>
 </resources>
