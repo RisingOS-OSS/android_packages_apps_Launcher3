@@ -45,15 +45,27 @@ class PhotoWidgetProvider : BaseWidgetProvider() {
     override fun getLayoutId(): Int = R.layout.widget_photo
 
     override fun onWidgetUpdate(context: Context) {
-        appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
-            android.content.ComponentName(context, PhotoWidgetProvider::class.java)
-        )
-        remoteViews = RemoteViews(context.packageName, getLayoutId())
+        if (appWidgetIds == null) {
+            appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
+                android.content.ComponentName(context, PhotoWidgetProvider::class.java)
+            )
+        }
+        if (remoteViews == null) {
+            remoteViews = RemoteViews(context.packageName, getLayoutId())
+        }
         update(context)
     }
 
     override suspend fun performScheduledTask(context: Context) {
         update(context)
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == "ACTION_WIDGET_CLICK") {
+            update(context)
+            schedulePolling(context)
+        }
     }
 
     private fun update(context: Context) {
@@ -84,7 +96,9 @@ class PhotoWidgetProvider : BaseWidgetProvider() {
                     setViewVisibility(R.id.widget_image, View.GONE)
                     setViewVisibility(R.id.widget_add_photo_text, View.VISIBLE)
                 }
-                val intent = Intent(context, PhotoPickerActivity::class.java)
+                val intent = Intent(context, PhotoPickerActivity::class.java).apply {
+                    action = "ACTION_WIDGET_CLICK"
+                }
                 val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
                 setOnClickPendingIntent(R.id.widget_root, pendingIntent)
             }

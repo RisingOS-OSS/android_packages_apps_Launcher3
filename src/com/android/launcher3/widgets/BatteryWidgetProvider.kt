@@ -47,15 +47,31 @@ class BatteryWidgetProvider : BaseWidgetProvider() {
     override fun getLayoutId(): Int = R.layout.widget_battery
 
     override fun onWidgetUpdate(context: Context) {
-        appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
-            android.content.ComponentName(context, BatteryWidgetProvider::class.java)
-        )
-        remoteViews = RemoteViews(context.packageName, getLayoutId())
+        if (appWidgetIds == null) {
+            appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(
+                android.content.ComponentName(context, BatteryWidgetProvider::class.java)
+            )
+        }
+        if (remoteViews == null) {
+            remoteViews = RemoteViews(context.packageName, getLayoutId())
+        }
         update(context)
     }
 
     override suspend fun performScheduledTask(context: Context) {
         update(context)
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == "ACTION_WIDGET_CLICK") {
+            update(context)
+            schedulePolling(context)
+            val batterySaverIntent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(batterySaverIntent)
+        }
     }
 
     private fun update(context: Context) {
@@ -69,8 +85,12 @@ class BatteryWidgetProvider : BaseWidgetProvider() {
                 setTextViewText(R.id.batteryLevel, batteryInfo)
                 setImageViewBitmap(R.id.phone_icon, getWidgetIcon(context, batteryInfo))
                 setTextViewText(R.id.deviceName, deviceName)
-                val intent = Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS)
-                val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                val intent = Intent(context, BatteryWidgetProvider::class.java).apply {
+                    action = "ACTION_WIDGET_CLICK"
+                }
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context, 0, intent, PendingIntent.FLAG_IMMUTABLE
+                )
                 setOnClickPendingIntent(R.id.batteryRootLayout, pendingIntent)
             }
             AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, remoteViews)

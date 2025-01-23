@@ -50,7 +50,7 @@ abstract class BaseWidgetProvider : AppWidgetProvider() {
         cancelPolling()
     }
 
-    private fun schedulePolling(context: Context) {
+    protected fun schedulePolling(context: Context) {
         cancelPolling()
         job = coroutineScope.launch {
             while (isActive) {
