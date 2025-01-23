@@ -997,7 +997,10 @@ public final class Utilities {
         MODEL_EXECUTOR.execute(() -> {
             final Handler handler = new Handler(Looper.getMainLooper());
             handler.postDelayed(() -> {
-                android.os.Process.killProcess(android.os.Process.myPid());
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                if (am != null) {
+                    am.forceStopPackage(context.getPackageName());
+                }
             }, WAIT_BEFORE_RESTART);
         });
     }
