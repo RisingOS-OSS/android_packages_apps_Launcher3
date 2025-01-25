@@ -207,7 +207,7 @@ public final class Utilities {
     public static final String KEY_DRAWER_SCROLLBAR = "pref_drawer_scrollbar";
     public static final String KEY_FORCE_MONOCHROME_ICON = "pref_force_monochrome_icon";
     public static final String KEY_AUTO_KEYABORD = "pref_auto_keyboard";
-
+    public static final String KEY_BLUR_BACKGROUND_AT_APP_LAUNCH = "pref_blur_background_at_app_launch";
     /**
      * Returns true if theme is dark.
      */
@@ -1221,7 +1221,12 @@ public final class Utilities {
         SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
         return prefs.getBoolean(KEY_AUTO_KEYABORD, false);
     }
-    
+
+    public static boolean blurBackgroundAtAppLaunch(Context context) {
+        SharedPreferences prefs = LauncherPrefs.getPrefs(context.getApplicationContext());
+        return prefs.getBoolean(KEY_BLUR_BACKGROUND_AT_APP_LAUNCH, true);
+    }
+
     public static boolean startContextualSearch(Context context, int entrypoint) {
         Context appContext = context.getApplicationContext();
         ContextualSearchManager contextualSearchManager = 
