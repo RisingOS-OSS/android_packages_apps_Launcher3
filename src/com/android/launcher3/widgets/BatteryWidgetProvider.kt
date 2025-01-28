@@ -168,9 +168,10 @@ class BatteryWidgetProvider : BaseWidgetProvider() {
             }
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             val canvas = Canvas(bitmap)
-            paint.color = Color.argb(75, 255, 255, 255)
+            val color = ContextCompat.getColor(context, R.color.battery_device_primary_color)
+            paint.color = Color.argb(75, Color.red(color), Color.green(color), Color.blue(color))
             canvas.drawArc(arc, minAngle, maxAngle, false, paint)
-            paint.color = Color.WHITE
+            paint.color = color
             canvas.drawArc(arc, minAngle, (maxAngle / 100) * percentage, false, paint)
             iconDrawable?.let {
                 val arcCenterX = (arc.left + arc.right) / 2

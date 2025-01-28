@@ -57,10 +57,10 @@ abstract class BaseToggleTileWidgetProvider : BaseToggleWidgetProvider() {
         appWidgetIds.forEach { appWidgetId ->
             remoteViews!!.apply {
                 setInt(R.id.widget_root, "setBackgroundColor", context.getColor(
-                    if (isActive) R.color.themed_icon_color else R.color.themed_icon_background_color
+                    if (isActive) R.color.battery_device_primary_color else R.color.battery_device_secondary_color
                 ))
                 setInt(R.id.widget_icon, "setColorFilter", context.getColor(
-                    if (isActive) R.color.themed_icon_background_color else R.color.themed_icon_color
+                    if (isActive) R.color.battery_device_secondary_color else R.color.battery_device_primary_color
                 ))
                 setImageViewResource(R.id.widget_icon, getIconResource(isActive))
                 val toggleIntent = getToggleActionIntent(context, appWidgetId)

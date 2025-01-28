@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/widget_background"
-    android:backgroundTint="@color/themed_icon_background_color"
-    android:padding="10dp">
+    android:backgroundTint="@color/battery_device_secondary_color">
 
     <ImageView
         android:id="@+id/widget_image"
@@ -25,7 +24,7 @@
         android:drawablePadding="8dp"
         android:textAlignment="center"
         android:textSize="16sp"
-        android:textColor="@color/themed_icon_color"
+        android:textColor="@color/battery_device_primary_color"
         android:layout_gravity="center" />
 </LinearLayout>
 
